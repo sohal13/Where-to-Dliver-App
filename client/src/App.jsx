@@ -3,6 +3,8 @@ import Map from './components/Map';
 import Sidebar from './components/Sidebar';
 import socket, { emitLocationUpdate, listenForUsersUpdated, joinRoom } from './socket';
 import axios from 'axios';
+import Lottie from "lottie-react";
+import deliveryAnimation from "./image/delivery.json"
 
 const getRoomIdFromUrl = () => {
     const match = window.location.pathname.match(/room\/([^/]+)/);
@@ -98,24 +100,84 @@ const App = () => {
     // If no room in URL, show room creation UI
     if (!roomId) {
         return (
-            <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
-                <form onSubmit={handleCreateRoom} className="bg-white p-8 rounded shadow">
-                    <h2 className="mb-4 text-xl font-bold">Create or Join a Room</h2>
-                    <input
-                        type="text"
-                        value={roomInput}
-                        onChange={e => setRoomInput(e.target.value)}
-                        placeholder="Enter room name"
-                        className="border p-2 rounded w-full mb-4"
-                        required
-                    />
-                    <button
-                        type="submit"
-                        className="bg-blue-500 text-white px-4 py-2 rounded w-full"
-                    >
-                        Go to Room
-                    </button>
-                </form>
+            <div className="min-h-screen flex flex-col bg-gradient-to-br from-white to-blue-50 text-gray-800">
+                {/* Header */}
+                <header className="w-full bg-white shadow-md py-4 px-6 flex justify-between items-center">
+                    <h1 className="text-2xl font-bold text-blue-600">Where-To-Deliver</h1>
+                    <nav className="hidden md:flex space-x-6 text-gray-600 font-medium">
+                        <a href="#features" className="hover:text-blue-600">Features</a>
+                        <a href="#tutorial" className="hover:text-blue-600">Tutorial</a>
+                        <a href="#contact" className="hover:text-blue-600">Contact</a>
+                    </nav>
+                </header>
+
+                {/* Hero Section */}
+                <main className="flex-grow flex flex-col-reverse lg:flex-row items-center justify-between px-6 py-16 max-w-7xl mx-auto gap-12">
+                    {/* Text and Form */}
+                    <div className="w-full lg:w-1/2 space-y-8">
+                        <h2 className="text-4xl sm:text-5xl font-extrabold leading-tight">
+                            Real-Time Delivery Rooms <br />
+                            Made <span className="text-blue-600">Fast & Easy</span>
+                        </h2>
+                        <p className="text-gray-600 text-lg">
+                            Join or create rooms for live delivery simulation. Perfect for food delivery, e-commerce, and logistics workflows.
+                        </p>
+
+                        <form onSubmit={handleCreateRoom} className="flex flex-col sm:flex-row gap-4">
+                            <input
+                                type="text"
+                                value={roomInput}
+                                onChange={(e) => setRoomInput(e.target.value)}
+                                placeholder="Enter room name"
+                                className="flex-1 px-4 py-3 rounded-lg border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500"
+                                required
+                            />
+                            <button
+                                type="submit"
+                                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition duration-300"
+                            >
+                                Join Room
+                            </button>
+                        </form>
+                    </div>
+
+                    {/* Image / Animation Placeholder */}
+                    <div className="w-full lg:w-1/2">
+                      <Lottie animationData={deliveryAnimation} loop={true} 
+                            
+                        />
+                    </div>
+                </main>
+
+                {/* YouTube CTA Section */}
+                <section id="tutorial" className="bg-white py-12 px-6 text-center shadow-inner">
+                    <div className="max-w-3xl mx-auto">
+                        <h3 className="text-3xl font-bold mb-4">Want to Learn How It Works?</h3>
+                        <p className="text-gray-600 mb-6">
+                            Watch our full YouTube tutorial on building this feature in food delivery and logistics apps.
+                        </p>
+                        <a
+                            href="https://www.youtube.com/@slr_tech"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-3 rounded-lg transition"
+                        >
+                            📺 Watch on YouTube
+                        </a>
+                    </div>
+                </section>
+
+                {/* Footer */}
+                <footer className="w-full bg-gray-900 text-white py-8 px-6 mt-12">
+                    <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
+                        <p className="text-sm">&copy; {new Date().getFullYear()} Where-To-Deliver. All rights reserved.</p>
+                        <div className="flex space-x-4 mt-4 md:mt-0 text-sm">
+                            <a href="#" className="hover:underline">Privacy Policy</a>
+                            <a href="#" className="hover:underline">Terms</a>
+                            <a href="#" className="hover:underline">Support</a>
+                        </div>
+                    </div>
+                </footer>
             </div>
         );
     }
